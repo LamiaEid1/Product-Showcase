@@ -23,9 +23,12 @@ import {
 import { useProductStore } from "../store/product";
 import { useState } from "react";
 
+// Product card component with edit and delete functionality
 const ProductCard = ({ product }) => {
+	// State for edit form
 	const [updatedProduct, setUpdatedProduct] = useState(product);
 
+	// Theme-aware styling
 	const textColor = useColorModeValue("gray.600", "gray.200");
 	const bg = useColorModeValue("white", "gray.800");
 
@@ -33,6 +36,7 @@ const ProductCard = ({ product }) => {
 	const toast = useToast();
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
+	// Handle product deletion with user feedback
 	const handleDeleteProduct = async (pid) => {
 		const { success, message } = await deleteProduct(pid);
 		if (!success) {
@@ -54,6 +58,7 @@ const ProductCard = ({ product }) => {
 		}
 	};
 
+	// Handle product update with user feedback
 	const handleUpdateProduct = async (pid, updatedProduct) => {
 		const { success, message } = await updateProduct(pid, updatedProduct);
 		onClose();
@@ -77,6 +82,7 @@ const ProductCard = ({ product }) => {
 	};
 
 	return (
+		// Product card with hover effects and theme support
 		<Box
 			shadow='lg'
 			rounded='lg'
@@ -85,17 +91,21 @@ const ProductCard = ({ product }) => {
 			_hover={{ transform: "translateY(-5px)", shadow: "xl" }}
 			bg={bg}
 		>
+			{/* Product image */}
 			<Image src={product.image} alt={product.name} h={48} w='full' objectFit='cover' />
 
 			<Box p={4}>
+				{/* Product name */}
 				<Heading as='h3' size='md' mb={2}>
 					{product.name}
 				</Heading>
 
+				{/* Product price */}
 				<Text fontWeight='bold' fontSize='xl' color={textColor} mb={4}>
 					${product.price}
 				</Text>
 
+				{/* Action buttons - edit and delete */}
 				<HStack spacing={2}>
 					<IconButton icon={<EditIcon />} onClick={onOpen} colorScheme='blue' />
 					<IconButton
@@ -106,6 +116,7 @@ const ProductCard = ({ product }) => {
 				</HStack>
 			</Box>
 
+			{/* Edit product modal */}
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
 
@@ -114,6 +125,7 @@ const ProductCard = ({ product }) => {
 					<ModalCloseButton />
 					<ModalBody>
 						<VStack spacing={4}>
+							{/* Edit form inputs */}
 							<Input
 								placeholder='Product Name'
 								name='name'

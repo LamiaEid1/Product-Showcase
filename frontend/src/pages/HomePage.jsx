@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import { useProductStore } from "../store/product";
 import ProductCard from "../components/ProductCard";
 
+// Home page component - displays all products in a responsive grid
 const HomePage = () => {
 	const { fetchProducts, products } = useProductStore();
 
+	// Fetch products when component mounts
 	useEffect(() => {
 		fetchProducts();
 	}, [fetchProducts]);
@@ -15,6 +17,7 @@ const HomePage = () => {
 	return (
 		<Container maxW='container.xl' py={12}>
 			<VStack spacing={8}>
+				{/* Page title with gradient text effect */}
 				<Text
 					fontSize={"30"}
 					fontWeight={"bold"}
@@ -25,6 +28,7 @@ const HomePage = () => {
 					Current Products 
 				</Text>
 
+				{/* Responsive product grid - 1 column on mobile, 2 on tablet, 3 on desktop */}
 				<SimpleGrid
 					columns={{
 						base: 1,
@@ -39,6 +43,7 @@ const HomePage = () => {
 					))}
 				</SimpleGrid>
 
+				{/* Empty state - shown when no products exist */}
 				{products.length === 0 && (
 					<Text fontSize='xl' textAlign={"center"} fontWeight='bold' color='gray.500'>
 						No products found 😢{" "}

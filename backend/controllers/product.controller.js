@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Product from "../models/product.model.js";
 
+// Get all products from database
 export const getProducts = async (req, res) => {
 	try {
 		const products = await Product.find({});
@@ -11,9 +12,11 @@ export const getProducts = async (req, res) => {
 	}
 };
 
+// Create a new product
 export const createProduct = async (req, res) => {
 	const product = req.body; // user will send this data
 
+	// Validate required fields
 	if (!product.name || !product.price || !product.image) {
 		return res.status(400).json({ success: false, message: "Please provide all fields" });
 	}
@@ -29,11 +32,12 @@ export const createProduct = async (req, res) => {
 	}
 };
 
+// Update an existing product by ID
 export const updateProduct = async (req, res) => {
 	const { id } = req.params;
-
 	const product = req.body;
 
+	// Validate MongoDB ObjectId format
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(404).json({ success: false, message: "Invalid Product Id" });
 	}
@@ -46,9 +50,11 @@ export const updateProduct = async (req, res) => {
 	}
 };
 
+// Delete a product by ID
 export const deleteProduct = async (req, res) => {
 	const { id } = req.params;
 
+	// Validate MongoDB ObjectId format
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(404).json({ success: false, message: "Invalid Product Id" });
 	}

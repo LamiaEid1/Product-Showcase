@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Product schema definition with required fields and timestamps
 const productSchema = new mongoose.Schema(
 	{
 		name: {
@@ -16,7 +17,7 @@ const productSchema = new mongoose.Schema(
 		},
 	},
 	{
-		timestamps: true, // createdAt, updatedAt
+		timestamps: true, // Automatically adds createdAt and updatedAt fields
 	}
 );
 
